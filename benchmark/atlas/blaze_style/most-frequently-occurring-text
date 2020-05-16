@@ -1,0 +1,12 @@
+// examples 
+"cat|dog|cat"
+"cat"
+"blue|red|red"
+"red"
+"firm|firm|soft"
+"firm"
+"soft|soft|soft"
+"soft"
+
+// extra constants 
+s:""#10|" "#10

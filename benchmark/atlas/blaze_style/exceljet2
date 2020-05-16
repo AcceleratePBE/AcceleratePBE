@@ -1,0 +1,10 @@
+// examples 
+"www.domain.com"
+"com"
+"mail.net"
+"net"
+"www.amaon.co.uk"
+"uk"
+
+// extra constants 
+s:""#10|" "#10|"."#10

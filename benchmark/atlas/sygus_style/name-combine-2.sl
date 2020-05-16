@@ -1,0 +1,7 @@
+(set-logic SLIA)
+(constraint (= (f "Nancy" "FreeHafer") "Nancy F."))
+(constraint (= (f "Andrew" "Cencici") "Andrew C."))
+(constraint (= (f "Jan" "Kotas") "Jan K."))
+(constraint (= (f "Mariya" "Sergienko") "Mariya S."))
+(check-synth)
+(synth-fun f ((firstname String) (lastname String)) String ((Start String (ntString)) (ntString String ((Str A) (str.++ ntString A))) (A String ((Str ConstString) (SubStr X P P))) (P Int ((Int ntInt) (Pos X Pattern ntInt Direction))) (Pattern String ((Str ConstString) "ProperCase" "CAPS" "lowercase" "Digits" "Alphabets" "Alphanumeric" "WhiteSpace" "ProperCaseWSpaces" "CAPSWSpaces" "lowercaseSpaces" "AlphabetsWSpaces")) (X String (firstname lastname)) (ConstString String (firstname lastname " " ".")) (Direction Int (0 1)) (ntInt Int (-5 -4 -3 -2 -1 0 1 2 3 4 5))))

@@ -1,0 +1,8 @@
+// examples 
+"ABC|D"
+"false"
+"ABC|BC"
+"true"
+
+// extra constants 
+s:""#10|" "#10

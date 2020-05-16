@@ -1,0 +1,10 @@
+// examples 
+"humpty dumpty"
+"2"
+"humpty dumpty sat on a wall,"
+"6"
+"couldnt put humpty together again."
+"5"
+
+// extra constants 
+s:""#10|" "#10

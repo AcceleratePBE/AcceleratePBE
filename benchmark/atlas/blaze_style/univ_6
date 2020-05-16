@@ -1,0 +1,20 @@
+// examples 
+"University of Pennsylvania|Phialdelphia, PA, USA"
+"Phialdelphia, PA, USA"
+"UCLA|Los Angeles, CA"
+"Los Angeles, CA, USA"
+"Cornell University|Ithaca, New York, USA"
+"Ithaca, NY, USA"
+"Penn|Philadelphia, PA, USA"
+"Philadelphia, PA, USA"
+"University of Maryland College Park|College Park, MD"
+"College Park, MD, USA"
+"University of Michigan|Ann Arbor, MI, USA"
+"Ann Arbor, MI, USA"
+"Columbia University|New York, NY, USA"
+"New York, NY, USA"
+"NYU|New York, New York, USA"
+"New York, NY, USA"
+
+// extra constants 
+s:" "#10|","#10|"USA"#10|"AK"#10|"AZ"#10|"AR"#10|"CA"#10|"CO"#10|"CT"#10|"DE"#10|"FL"#10|"GA"#10|"HI"#10|"ID"#10|"IL"#10|"IN"#10|"IA"#10|"KS"#10|"KY"#10|"LA"#10|"ME"#10|"MD"#10|"MA"#10|"MI"#10|"MN"#10|"MS"#10|"MO"#10|"MT"#10|"NE"#10|"NV"#10|"NH"#10|"NJ"#10|"NM"#10|"NY"#10|"NC"#10|"ND"#10|"OH"#10|"OK"#10|"OR"#10|"PA"#10|"RI"#10|"SC"#10|"SD"#10|"TN"#10|"TX"#10|"UT"#10|"VT"#10|"VA"#10|"WA"#10|"WV"#10|"WI"#10|"New York"#10

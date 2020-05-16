@@ -1,0 +1,10 @@
+// examples 
+"Trucking Inc."
+"Trucking"
+"New Truck Inc"
+"New Truck"
+"ABV Trucking Inc, LLC"
+"ABV Trucking"
+
+// extra constants 
+s:""#10|" "#10|"Inc"#10|"."#10|","#10|"LLC"#10

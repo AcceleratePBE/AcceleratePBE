@@ -1,0 +1,12 @@
+// examples 
+"Nancy|FreeHafer"
+"Nancy F."
+"Andrew|Cencici"
+"Andrew C."
+"Jan|Kotas"
+"Jan K."
+"Mariya|Sergienko"
+"Mariya S."
+
+// extra constants 
+s:" "#10|"."#10

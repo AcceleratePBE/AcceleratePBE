@@ -1,0 +1,10 @@
+// examples 
+"Jones <60>"
+"60"
+"Jones <57>"
+"57"
+"Jones <55>"
+"55"
+
+// extra constants 
+s:""#10|" "#10|"<"#10|">"#10

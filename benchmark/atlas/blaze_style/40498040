@@ -1,0 +1,14 @@
+// examples 
+"some project,other project"
+"true"
+"some project"
+"true"
+"overhead"
+"false"
+"some project, overhead"
+"false"
+"some project, other, boo"
+"true"
+
+// extra constants 
+s:""#10|" "#10|"overhead"#10|"some project"#10|"other"#10|"boo"#10|","#10

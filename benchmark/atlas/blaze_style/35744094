@@ -1,0 +1,10 @@
+// examples 
+"http=//www.apple.com/uk/mac"
+"mac"
+"https=//www.microsoft.com/en-gb/windows"
+"windows"
+"https=//www.microsoft.com/"
+"microsoft"
+
+// extra constants 
+s:""#10|" "#10|"/"#10|"microsoft"#10|"windows"#10|"apple"#10|"mac"#10

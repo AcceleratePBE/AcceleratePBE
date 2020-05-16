@@ -1,0 +1,16 @@
+// examples 
+"Launa|Withers"
+"L. Withers"
+"Lakenya|Edison"
+"L. Edison"
+"Brendan|Hage"
+"B. Hage"
+"Bradford|Lango"
+"B. Lango"
+"Rudolf|Akiyama"
+"R. Akiyama"
+"Lara|Constable"
+"L. Constable"
+
+// extra constants 
+s:" "#10|"."#10

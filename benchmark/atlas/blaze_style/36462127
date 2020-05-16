@@ -1,0 +1,8 @@
+// examples 
+"ABCDE/FGHI/JKL/MNOPQR"
+"MNOPQR"
+"A/ABCDE/FGHI/JKL"
+"JKL"
+
+// extra constants 
+s:""#10|" "#10|"/"#10

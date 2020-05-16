@@ -1,0 +1,8 @@
+(set-logic SLIA)
+(constraint (= (f "some project,other project") true))
+(constraint (= (f "some project") true))
+(constraint (= (f "overhead") false))
+(constraint (= (f "some project, overhead") false))
+(constraint (= (f "some project, other, boo") true))
+(check-synth)
+(synth-fun f ((_arg_0 String)) Bool ((Start Bool (ntBool)) (ntString String ((Str A) (str.++ ntString A))) (A String ((Str ConstString) (SubStr X P P))) (P Int ((Int ntInt) (Pos X Pattern ntInt Direction))) (Pattern String ((Str ConstString) "ProperCase" "CAPS" "lowercase" "Digits" "Alphabets" "Alphanumeric" "WhiteSpace" "ProperCaseWSpaces" "CAPSWSpaces" "lowercaseSpaces" "AlphabetsWSpaces")) (X String (_arg_0)) (ConstString String (_arg_0 "" " " "overhead" "some project" "other" "boo" ",")) (Direction Int (0 1)) (ntInt Int (-5 -4 -3 -2 -1 0 1 2 3 4 5))))

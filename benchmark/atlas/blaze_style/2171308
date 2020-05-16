@@ -1,0 +1,10 @@
+// examples 
+"John Doe"
+"J Doe"
+"Mayur Naik"
+"M Naik"
+"Nimit Singh"
+"N Singh"
+
+// extra constants 
+s:""#10|" "#10

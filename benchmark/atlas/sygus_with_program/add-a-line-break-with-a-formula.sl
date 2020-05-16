@@ -1,0 +1,7 @@
+(set-logic SLIA)
+(constraint (= (f "Traci Brown" "1301 Robinson Court" "Saginaw, MI 48607") "Traci Brown/n1301 Robinson Court/nSaginaw, MI 48607"))
+(constraint (= (f "Mary Hannan" "1195 Amethyst Drive" "Lansing, MI 48933") "Mary Hannan/n1195 Amethyst Drive/nLansing, MI 48933"))
+(constraint (= (f "Linda Thomas" "2479 North Bend Road" "Allen, KY 41601") "Linda Thomas/n2479 North Bend Road/nAllen, KY 41601"))
+(check-synth)
+(synth-fun f ((_arg_0 String) (_arg_1 String) (_arg_2 String)) String ((Start String (ntString)) (ntString String ((Str A) (str.++ ntString A))) (A String ((Str ConstString) (SubStr X P P))) (P Int ((Int ntInt) (Pos X Pattern ntInt Direction))) (Pattern String ((Str ConstString) "ProperCase" "CAPS" "lowercase" "Digits" "Alphabets" "Alphanumeric" "WhiteSpace" "ProperCaseWSpaces" "CAPSWSpaces" "lowercaseSpaces" "AlphabetsWSpaces")) (X String (_arg_0 _arg_1 _arg_2)) (ConstString String (_arg_0 _arg_1 _arg_2 "" " " "/n")) (Direction Int (0 1)) (ntInt Int (-5 -4 -3 -2 -1 0 1 2 3 4 5))))
+(define-fun ResFun ((_arg_0 String) (_arg_1 String) (_arg_2 String)) String (str.++ (str.++ (str.++ (str.++ (Str (Str _arg_0)) (Str "/n")) (Str _arg_1)) (Str "/n")) (Str _arg_2)))

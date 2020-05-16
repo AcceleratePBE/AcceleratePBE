@@ -1,0 +1,10 @@
+// examples 
+"The"
+"3"
+"The quick fox"
+"13"
+"The quick  fox"
+"14"
+
+// extra constants 
+s:""#10|" "#10

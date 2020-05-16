@@ -1,0 +1,12 @@
+// examples 
+"you can do anything but you cant do everything.|4"
+"anything"
+"you can do anything but you cant do everything.|1"
+"you"
+"you can do anything but you cant do everything.|2"
+"can"
+"you can do anything but you cant do everything.|3"
+"do"
+
+// extra constants 
+s:""#10|" "#10

@@ -1,0 +1,8 @@
+// examples 
+"home/Excel/Sheet1.xls"
+"Sheet1.xls"
+"home/user/Sheet1.xls"
+"Sheet1.xls"
+
+// extra constants 
+s:""#10|" "#10|"/"#10

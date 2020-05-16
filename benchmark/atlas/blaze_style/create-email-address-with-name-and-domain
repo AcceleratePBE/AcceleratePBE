@@ -1,0 +1,10 @@
+// examples 
+"ayako|ogawa|acme.com"
+"aogawa_acme.com"
+"amy|johnson|google.com"
+"ajohnson_google.com"
+"tom|chang|upenn.edu"
+"tchang_upenn.edu"
+
+// extra constants 
+s:""#10|" "#10|"_"#10

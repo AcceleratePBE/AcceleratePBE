@@ -1,0 +1,10 @@
+// examples 
+"34653 jim mcdonald"
+" jim mcdonald"
+"price is 500"
+" price is "
+"100 apples"
+" apples"
+
+// extra constants 
+s:""#10|" "#10

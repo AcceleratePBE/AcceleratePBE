@@ -1,0 +1,14 @@
+// examples 
+"spreadsheet|1"
+"s"
+"spreadsheet|2"
+"p"
+"spreadsheet|3"
+"r"
+"spreadsheet|4"
+"e"
+"spreadsheet|5"
+"a"
+
+// extra constants 
+s:""#10|" "#10

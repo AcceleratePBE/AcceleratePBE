@@ -1,0 +1,18 @@
+// examples 
+"General Electric"
+"General Electric"
+"General Electric Inc"
+"General Electric"
+"General Electric Company"
+"General Electric"
+"Microsoft"
+"Microsoft"
+"Microsoft Corporation"
+"Microsoft"
+"Nintendo"
+"Nintendo"
+"Nintendo Enterprises"
+"Nintendo"
+
+// extra constants 
+s:""#10|" "#10|"Inc"#10|"Company"#10|"Corporation"#10|"Enterprises"#10

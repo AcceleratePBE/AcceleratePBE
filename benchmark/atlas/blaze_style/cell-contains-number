@@ -1,0 +1,10 @@
+// examples 
+"A bird in the hand is worth 2 in the bush."
+"true"
+"A bird in the hand is worth two in the bush."
+"false"
+"The 15 shortcuts you simply must know"
+"true"
+
+// extra constants 
+s:""#10|" "#10|"1"#10|"2"#10|"3"#10|"4"#10|"5"#10

@@ -1,0 +1,209 @@
+{
+  "type": "expr",
+  "operator": "xor",
+  "params": [
+    {
+      "type": "expr",
+      "operator": "xor",
+      "params": [
+        {
+          "type": "var",
+          "var_name": "r2",
+          "id": 4,
+          "var_type": "Bool"
+        },
+        {
+          "type": "const",
+          "value": "false",
+          "value_type": "Bool"
+        }
+      ]
+    },
+    {
+      "type": "expr",
+      "operator": "xor",
+      "params": [
+        {
+          "type": "expr",
+          "operator": "xor",
+          "params": [
+            {
+              "type": "var",
+              "var_name": "k1",
+              "id": 0,
+              "var_type": "Bool"
+            },
+            {
+              "type": "var",
+              "var_name": "r1",
+              "id": 3,
+              "var_type": "Bool"
+            }
+          ]
+        },
+        {
+          "type": "expr",
+          "operator": "xor",
+          "params": [
+            {
+              "type": "expr",
+              "operator": "xor",
+              "params": [
+                {
+                  "type": "expr",
+                  "operator": "xor",
+                  "params": [
+                    {
+                      "type": "var",
+                      "var_name": "r3",
+                      "id": 5,
+                      "var_type": "Bool"
+                    },
+                    {
+                      "type": "expr",
+                      "operator": "not",
+                      "params": [
+                        {
+                          "type": "var",
+                          "var_name": "r2",
+                          "id": 4,
+                          "var_type": "Bool"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "expr",
+                  "operator": "and",
+                  "params": [
+                    {
+                      "type": "expr",
+                      "operator": "not",
+                      "params": [
+                        {
+                          "type": "expr",
+                          "operator": "xor",
+                          "params": [
+                            {
+                              "type": "var",
+                              "var_name": "k2",
+                              "id": 1,
+                              "var_type": "Bool"
+                            },
+                            {
+                              "type": "var",
+                              "id": 4,
+                              "var_name": "r2",
+                              "var_type": "Bool"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "expr",
+                      "operator": "xor",
+                      "params": [
+                        {
+                          "type": "var",
+                          "var_name": "k3",
+                          "id": 2,
+                          "var_type": "Bool"
+                        },
+                        {
+                          "type": "var",
+                          "var_name": "r3",
+                          "id": 5,
+                          "var_type": "Bool"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "expr",
+              "operator": "xor",
+              "params": [
+                {
+                  "type": "var",
+                  "var_name": "r4",
+                  "id": 6,
+                  "var_type": "Bool"
+                },
+                {
+                  "type": "expr",
+                  "operator": "xor",
+                  "params": [
+                    {
+                      "type": "expr",
+                      "operator": "and",
+                      "params": [
+                        {
+                          "type": "var",
+                          "var_name": "r2",
+                          "id": 4,
+                          "var_type": "Bool"
+                        },
+                        {
+                          "type": "expr",
+                          "operator": "xor",
+                          "params": [
+                            {
+                              "type": "var",
+                              "var_name": "k3",
+                              "id": 2,
+                              "var_type": "Bool"
+                            },
+                            {
+                              "type": "var",
+                              "var_name": "r3",
+                              "id": 5,
+                              "var_type": "Bool"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "expr",
+                      "operator": "and",
+                      "params": [
+                        {
+                          "type": "var",
+                          "var_name": "r3",
+                          "id": 5,
+                          "var_type": "Bool"
+                        },
+                        {
+                          "type": "expr",
+                          "operator": "xor",
+                          "params": [
+                            {
+                              "type": "var",
+                              "var_name": "k2",
+                              "id": 1,
+                              "var_type": "Bool"
+                            },
+                            {
+                              "type": "var",
+                              "var_name": "r2",
+                              "id": 4,
+                              "var_type": "Bool"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

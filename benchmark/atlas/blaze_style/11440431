@@ -1,0 +1,14 @@
+// examples 
+"Mining US"
+"Mining"
+"Soybean Farming CAN"
+"Soybean Farming"
+"Soybean Farming"
+"Soybean Farming"
+"Oil Extraction US"
+"Oil Extraction"
+"Fishing"
+"Fishing"
+
+// extra constants 
+s:""#10|" "#10|"US"#10|"CAN"#10

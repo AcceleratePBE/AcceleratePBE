@@ -1,0 +1,12 @@
+// examples 
+"happy.jpg"
+"happy"
+"pivot table.xls"
+"pivot table"
+"sales data.csv"
+"sales data"
+"invoice3001.xls.pdf"
+"invoice3001"
+
+// extra constants 
+s:""#10|" "#10|"."#10

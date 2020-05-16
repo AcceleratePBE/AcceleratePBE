@@ -1,0 +1,10 @@
+// examples 
+"geb. 14 oct 1956 Westerkerk HRL"
+"Westerkerk HRL"
+"geb. 14 oct 1956 "
+""
+"geb. 15 feb 1987 Westerkerk HRL"
+"Westerkerk HRL"
+
+// extra constants 
+s:""#10|" "#10|"1"#10|"9"#10

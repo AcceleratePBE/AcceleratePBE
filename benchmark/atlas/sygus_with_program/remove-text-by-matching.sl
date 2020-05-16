@@ -1,0 +1,6 @@
+(set-logic SLIA)
+(constraint (= (f "801-345-1987") "8013451987"))
+(constraint (= (f "612-554-2000") "6125542000"))
+(check-synth)
+(synth-fun f ((_arg_0 String)) String ((Start String (ntString)) (ntString String ((Str A) (str.++ ntString A))) (A String ((Str ConstString) (SubStr X P P))) (P Int ((Int ntInt) (Pos X Pattern ntInt Direction))) (Pattern String ((Str ConstString) "ProperCase" "CAPS" "lowercase" "Digits" "Alphabets" "Alphanumeric" "WhiteSpace" "ProperCaseWSpaces" "CAPSWSpaces" "lowercaseSpaces" "AlphabetsWSpaces")) (X String (_arg_0)) (ConstString String (_arg_0 "" " " "-")) (Direction Int (0 1)) (ntInt Int (-5 -4 -3 -2 -1 0 1 2 3 4 5))))
+(define-fun ResFun ((_arg_0 String)) String (str.++ (str.++ (Str (SubStr _arg_0 (Int 0) (Int 2))) (SubStr _arg_0 (Int 4) (Pos _arg_0 "Alphanumeric" 1 1))) (SubStr _arg_0 (Pos _arg_0 "Alphanumeric" 2 0) (Pos _arg_0 "Alphanumeric" 2 1))))

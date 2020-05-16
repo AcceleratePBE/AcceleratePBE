@@ -1,0 +1,738 @@
+#!/usr/bin/env python3
+
+import os
+import random
+import pprint as pp
+import numpy as np
+import pickle as pkl
+import math
+import time
+import matplotlib.pyplot as plt
+import subprocess
+import sys
+# import xlrd
+
+benchmark_root = "../benchmark/"
+
+memory_limit = 8 * 1024 * 1024
+thread_num = 5
+thread_pool = [None for _ in range(thread_num)]
+time_limit = 300
+default_depth = 1
+depth_l_limit = 0
+depth_r_limit = 2
+bin_file = "../cmake-build-debug-remote-host/run"
+extra_list = ["", "FMultiExample", "FFHeuristic"]
+
+
+def clear_dict(dict_name):
+    if os.path.exists(dict_name):
+        os.system("rm -rf " + dict_name)
+    os.system("mkdir " + dict_name)
+
+key_list = ["long", "short", "repeat", "-", "_", "small"]
+
+def get_group_name(file_name):
+    for key in key_list:
+        file_name = file_name.replace(key, "")
+    return file_name
+
+def train_model(file_list, l_depth, r_depth, is_clear='N'):
+    clear_dict("training_set")
+    clear_dict("models")
+    for file in file_list:
+        os.system("cp " + file + " training_set")
+    for i in range(l_depth, r_depth + 1):
+        command = "python3 ../train/python/main.py training_set " + str(i) + " models " + is_clear + " "
+        if "test_matrix" in bin_file:
+            command += " Matrix"
+        os.system(command)
+    clear_dict("training_set")
+
+
+def collect_benchmarks(name: str, suffix = ".sl"):
+    group_map = {}
+    benchmark_folder = os.path.join(benchmark_root, name)
+    for benchmark_name in os.listdir(benchmark_folder):
+        if suffix in benchmark_name:
+            group_name = get_group_name(benchmark_name)
+            if group_name not in group_map:
+                group_map[group_name] = []
+            group_map[group_name].append({"name": benchmark_name, "path": os.path.join(benchmark_folder, benchmark_name)})
+    return list(group_map.values())
+
+
+def convert_to_unix(file):
+    os.system("dos2unix " + file)
+
+
+def obtain_flashfill_result(task_name):
+    result_file = "flashfill_result/flashfill/" + task_name + ".prof"
+    error_file_list = ["flashfill_result/flashfill/" + task_name + ".err",
+                       "flashfill_result/flashfill/" + task_name + ".err2"]
+    if not os.path.exists(result_file):
+        return None
+    for error_file in error_file_list:
+        with open(error_file, "r") as inp:
+            contents = inp.readlines()
+            is_invalid = False
+            if len(contents) >= 2: is_invalid = True
+            for content in contents:
+                if len(content) >= 2:
+                    is_invalid = True
+            if is_invalid:
+                return None
+    with open(result_file, "r") as inp:
+        result = inp.readlines()
+        for line in result:
+            if "TotalSeconds" in str(line):
+                return float(str(line)[:-1].split(' ')[-1])
+    print("Unexpected Error: " + task_name)
+    return None
+
+
+def get_result(file_name):
+    try:
+        with open(file_name, "r") as inp:
+            lines = inp.readlines()
+            if len(lines) == 0 or len(lines[0]) <= 2:
+                return None
+            return {"Program": lines[0][:-1], "Time": float(lines[1][:-1])}
+    except FileNotFoundError:
+        return None
+
+total_benchmark = 0
+total_finished = 0
+
+
+def finish(pos, ti, res):
+    assert thread_pool[pos] is not None
+    name = thread_pool[pos]["name"]
+    key = thread_pool[pos]["key"]
+    res[key][name] = ti
+    global total_finished
+    total_finished += 1
+    print("Finish ", key, name, ti, "Now " + str(total_finished) + "/" + str(total_benchmark))
+
+
+def deal_with(pos, res):
+    status = thread_pool[pos]["thread"].poll()
+    if status is not None and status != 1:
+        finish(pos, get_result(thread_pool[pos]["oup"]), res)
+        thread_pool[pos] = None
+        return
+
+
+counter = 0
+
+
+def run_benchmark(name, command, oup, key, res):
+    target_pos = None
+    while target_pos is None:
+        for pos in range(thread_num):
+            if thread_pool[pos] is not None:
+                deal_with(pos, res)
+            if thread_pool[pos] is None:
+                target_pos = pos
+                break
+        time.sleep(1)
+    thread_pool[target_pos] = {}
+    thread_pool[target_pos]["key"] = key
+    thread_pool[target_pos]["name"] = name
+    thread_pool[target_pos]["oup"] = oup
+    thread_pool[target_pos]["thread"] = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
+
+
+def collect_all_result(res):
+    while True:
+        all_empty = True
+        for pos in range(thread_num):
+            if thread_pool[pos] is not None:
+                deal_with(pos, res)
+                all_empty = False
+        if all_empty:
+            break
+        time.sleep(1)
+
+
+def run_all(file_list, depth_list, extra_list, res):
+    global counter
+    global total_benchmark
+    global total_finished
+    total_benchmark = len(file_list) * len(depth_list) * len(extra_list)
+    total_finished = 0
+    counter = 0
+    clear_dict("temp")
+    for depth in depth_list:
+        for extra in extra_list:
+            name = str(depth) + "," + extra
+            if name not in res:
+                res[name] = {}
+            for benchmark_file in file_list:
+                counter += 1
+                oup_file = "temp/" + str(counter) + ".res"
+                model_file = "models/model@depth" + str(depth) + ".json"
+                command = ['ulimit -v ' + str(memory_limit) + ';' + "timeout " + str(time_limit) + " ./" + bin_file, model_file, benchmark_file, oup_file, extra]
+                command = " ".join(command)
+                run_benchmark(benchmark_file.split("/")[-1], command, oup_file, name, res)
+    collect_all_result(res)
+    clear_dict("temp")
+
+def getTime(data):
+    if type(data) == dict:
+        return data["Time"]
+    else:
+        return data
+
+
+def run_fold(n, benchmark_list, l_depth, r_depth, extra_list = [""]):
+    tracks = [[] for _ in range(n)]
+    random.shuffle(benchmark_list)
+    for (i, group) in enumerate(benchmark_list):
+        tracks[i % n] += group
+    result = {}
+    for i in range(n):
+        print("Fold " + str(i) + "/" + str(n))
+        test = []
+        train = []
+        for j in range(n):
+            for benchmark in tracks[j]:
+                if j == i:
+                    test.append(benchmark["path"])
+                else:
+                    train.append(benchmark["path"])
+        train_model(train, l_depth, r_depth, 'Y' if i == 0 else 'N')
+        run_all(test, range(l_depth, r_depth + 1), extra_list, result)
+    return result
+
+
+def draw(result_map, fig_name, name_map, size=(6, 3), title=None, is_left=True, is_print_fail=False,
+         main_name="1,", loc=None):
+    ls_list = ['-', '--', '-.', '-.', '-.']
+    lc = ['cornflowerblue', 'indianred', 'orange', 'forestgreen']
+    pc = ['mediumblue', 'darkred', 'peru', 'darkgreen']
+    _pos = 0
+    max_num = 0
+    for name, res in result_map.items():
+        num = 0
+        for _, value in res.items():
+            if value is not None:
+                num += 1
+        max_num = max(max_num, num)
+    name_list = []
+    plt.figure(figsize=size)
+    for name, res in result_map.items():
+        y = []
+        for benchmark_name, value in res.items():
+            if value is not None:
+                #if value < 0.003:
+                #    print("extremely small", benchmark_name)
+                y.append(getTime(value))
+            elif is_print_fail:
+                print("Fail ", benchmark_name)
+        step = max(1, max_num // 15)
+        y = sorted(y)
+        x = list(range(1, len(y) + 1))
+        X = [x[i] for i in range(len(x)) if (i + 1) % step == 0]
+        Y = [y[i] for i in range(len(y)) if (i + 1) % step == 0]
+        name_list.append(name_map(name))
+        if name == main_name:
+            pos = 0
+        else:
+            _pos += 1
+            pos = _pos
+        plt.scatter(X, Y, marker='^', s=10, color=pc[pos])
+        plt.plot(x, y, ls=ls_list[pos], color=lc[pos], alpha=0.5)
+    plt.yscale('log')
+    if loc is None:
+        plt.legend(name_list)
+    else: plt.legend(name_list, loc = loc)
+    plt.xlabel('#Benchmarks')
+    if is_left: plt.ylabel('Time(s)')
+    if title is not None:
+        plt.title(title)
+    plt.tight_layout()
+    #plt.show()
+    plt.savefig("result_fig/" + fig_name)
+
+cache_dir = "result_cache"
+
+def load_cache(file):
+    if not os.path.exists(file):
+        return None
+    with open(file, "rb") as inp:
+        return pkl.load(inp)
+
+def save_cache(file, result):
+    with open(file, "wb") as oup:
+        pkl.dump(result, oup)
+
+
+def rename(name):
+    if name in ["1,", "1,blaze"]: return "MaxFlash"
+    if name == "0,": return "MaxFlash@M0"
+    if name == "2,": return "MaxFlash@M2"
+    if name == "2": return "2-fold"
+    if name == "5": return "5-fold"
+    if name == "1,FFHeuristic": return "MaxFlash-H"
+    if name == "1,FMultiExample": return "MaxFlash-M"
+    return name
+
+def compare_two_approaches(result, name_faster, name_slower):
+    total = {}
+    faster = 0
+    for (pos, solver_name) in enumerate([name_faster, name_slower]):
+        res = result[solver_name]
+        for name, ti in res.items():
+            if ti is not None and getTime(ti) <= time_limit:
+                if name not in total: total[name] = [None, None]
+                total[name][pos] = getTime(ti)
+    large_count = 0
+    large_res = 0
+    all_count = 0
+    all_res = 0
+    small_count = 0
+    small_res = 0
+    check = 1
+    for name, total_res in total.items():
+        if total_res[0] is None or total_res[1] is None: continue
+        if total_res[0] < total_res[1]:
+            faster += 1
+        all_count += 1
+        all_res += math.log(total_res[1]) - math.log(total_res[0])
+        check *= total_res[1] / total_res[0]
+        if max(total_res) > 0.5:
+            large_count += 1
+            large_res += math.log(total_res[1]) - math.log(total_res[0])
+        else:
+            small_count += 1
+            small_res += math.log(total_res[1]) - math.log(total_res[0])
+
+    large_res /= max(1, large_count)
+    all_res /= all_count
+    small_res /= max(1, small_count)
+    print("Compare", rename(name_faster), "to", rename(name_slower))
+    print("All speed up: ", math.exp(all_res))
+    print("Small speed up: ", math.exp(small_res))
+    print("Large speed up: ", math.exp(large_res))
+
+def print_result(result):
+    for name, res in result.items():
+        count = 0
+        count_small = 0
+        for _, ti in res.items():
+            if ti is not None and getTime(ti) <= time_limit:
+                count += 1
+                if getTime(ti) <= 0.5:
+                    count_small += 1
+        print("#solved ", rename(name), count, count_small)
+    for name1 in result:
+        for name2 in result:
+            if name1 != name2:
+                compare_two_approaches(result, name1, name2)
+    print("=" * 30)
+
+def to_list(benchmark_list):
+    result = []
+    for group in benchmark_list:
+        result += group
+    return result
+
+def run_matrix(benchmark_pos, max_result):
+    benchmark_list = collect_benchmarks(benchmark_pos, "")
+    cache_file = os.path.join(cache_dir, max_result)
+    print("Start ", cache_file)
+    result = load_cache(cache_file)
+    if result is None:
+        pp.pprint(benchmark_list)
+        result = run_fold(len(benchmark_list), benchmark_list, default_depth, default_depth)
+        save_cache(cache_file, result)
+    draw(result, "matrix", lambda x: r'$MaxFlash$', size=(4,3), is_left=False)
+
+def compare_with_flashfill(benchmark_pos="main", max_result="main.pkl"):
+    benchmark_list = collect_benchmarks(benchmark_pos)
+    cache_file = os.path.join(cache_dir, max_result)
+    result = load_cache(cache_file)
+    if result is None:
+        result = run_fold(len(benchmark_list), benchmark_list, default_depth, default_depth)
+        save_cache(cache_file, result)
+    result["flashfill"] = {}
+    for benchmark in to_list(benchmark_list):
+        name = benchmark["name"]
+        ti = obtain_flashfill_result(name)
+        if ti is not None:
+            result["flashfill"][name] = ti
+    print("Compare with flashfill")
+    print_result(result)
+    #draw(result, "flashfill", lambda x: r'$MaxFlash$' if "1" in x else r'$FlashFill$',
+    #     size=(4,3), is_left=False)
+    return result
+
+def obtain_euphony_result(name):
+    result_file = "euphony_result/eusolver_result"
+    with open(result_file, "r") as inp:
+        for line in inp.readlines():
+            info = line[:-1].split(" ")
+            info = list(filter(lambda x: len(x) > 0, info))
+            if len(info) > 0 and info[0] == name:
+                result = float(info[3])
+                if result > time_limit:
+                    return None
+                return result
+    return None
+
+def obtain_eusolver_result(name):
+    result_file = "euphony_result/eusolver_result"
+    with open(result_file, "r") as inp:
+        for line in inp.readlines():
+            info = line[:-1].split(" ")
+            info = list(filter(lambda x: len(x) > 0, info))
+            if len(info) > 0 and info[0] == name:
+                result = float(info[5])
+                if result > time_limit:
+                    return None
+                return result
+    return None
+
+
+def compare_with_euphony():
+    benchmark_list = collect_benchmarks("euphony/test")
+    test = list(map(lambda x: x["path"], to_list(benchmark_list)))
+    cache_file = os.path.join(cache_dir, "euphony.pkl")
+    result = load_cache(cache_file)
+    if result is None:
+        train_list = collect_benchmarks("euphony/train")
+        train = list(map(lambda x: x["path"], to_list(train_list)))
+        train_model(train, default_depth, default_depth)
+        result = {}
+        run_all(test, [default_depth], [""], result)
+        save_cache(cache_file, result)
+    result["euphony"] = {}
+    for benchmark in to_list(benchmark_list):
+        name = benchmark["name"]
+        ti = obtain_euphony_result(name)
+        if ti is not None:
+            result["euphony"][name] = ti
+    print("Compare with euphony")
+    print_result(result)
+    draw(result, "Fig4a-left", lambda x: r'$MaxFlash$' if "1" in x else r'$Euphony$',
+         size=(4.2,3), is_left=True)
+    return result
+    #draw(result, "euphony")
+
+def compare_with_eusolver(benchmark_pos="main", max_result="main.pkl"):
+    benchmark_list = collect_benchmarks(benchmark_pos)
+    cache_file = os.path.join(cache_dir, max_result)
+    result = load_cache(cache_file)
+    if result is None:
+        result = run_fold(len(benchmark_list), benchmark_list, default_depth, default_depth)
+        save_cache(cache_file, result)
+    result["eusolver"] = {}
+    for benchmark in to_list(benchmark_list):
+        name = benchmark["name"]
+        ti = obtain_eusolver_result(name)
+        if ti is not None:
+            result["eusolver"][name] = ti
+    print("Compare with eusolver")
+    print_result(result)
+    #draw(result, "eusolver", lambda x: r'MaxFlash' if "1" in x else r'$Eusolver$',
+    #     size=(4.2,3), is_left=True)
+    #draw(result, "eusolver")
+    return result
+
+def compare_between_different_depth(benchmark_pos="main", prefix="", pos=""):
+    benchmark_list = collect_benchmarks(benchmark_pos, "" if benchmark_pos == "matrix" else ".sl")
+    cache_file = os.path.join(cache_dir, prefix + "depth.pkl")
+    result = load_cache(cache_file)
+    if result is None:
+        result = run_fold(len(benchmark_list), benchmark_list, depth_l_limit, depth_r_limit)
+        save_cache(cache_file, result)
+    draw(result, pos, lambda x: r'$ M_{0}$'.format(int(x[0])), size=(4,3), is_left=False)
+    print_result(result)
+
+def compare_between_different_optimiazation_module(benchmark_pos="main", prefix="", pos=""):
+    benchmark_list = collect_benchmarks(benchmark_pos, "" if benchmark_pos == "matrix" else ".sl")
+    cache_file = os.path.join(cache_dir, prefix + "optimization.pkl")
+    result = load_cache(cache_file)
+    if result is None:
+        result = run_fold(len(benchmark_list), benchmark_list, default_depth, default_depth, extra_list)
+        save_cache(cache_file, result)
+    name_map = {"M": "M", "F": "H"}
+    draw(result, pos, lambda x: r"$MaxFill$" if len(x) <= 3 else r"$MaxFill_{-" + name_map[x[3]] + "}$")
+    print_result(result)
+
+def run_cvc4(path):
+    command = 'ulimit -v ' + str(memory_limit) + ';' + "timeout " + str(time_limit) + " ./../cvc4-1.7-x86_64-linux-opt " + path
+    start = time.time()
+    output = subprocess.getoutput(command)
+    end = time.time()
+    res = output.split("\n")
+    if len(res) < 2 or res[0] != "unsat":
+        return None, None
+    return end - start, res[1]
+
+def draw_exp1_first(result_list):
+    merge = {}
+    for result in result_list:
+        for key, value in result.items():
+            if key not in merge:
+                merge[key] = value
+    name_map = {"1,": r'$MaxFlash$', "flashfill": r'$FlashFill$', "eusolver": r'$Eusolver$', "cvc4": r'$CVC4$'}
+    draw(merge, "Fig4a-mid", lambda x: name_map[x], size=(4,3), loc="lower right", is_left=False)
+
+def compare_with_different_fold(fold_list, benchmark_pos="main", prefix = "main"):
+    benchmark_list = collect_benchmarks(benchmark_pos, "" if benchmark_pos == "matrix" else ".sl")
+    for fold in fold_list:
+        max_result = prefix + "_fold_" + str(fold) + ".pkl"
+        cache_file = os.path.join(cache_dir, max_result)
+        result = load_cache(cache_file)
+        if result is None:
+            print("run fold", fold, max_result)
+            result = run_fold(fold, benchmark_list, default_depth, default_depth)
+            save_cache(cache_file, result)
+
+def draw_different_fold(fold_list, prefix="main", pos=""):
+    result_full = os.path.join(cache_dir, prefix + ".pkl")
+    result = load_cache(result_full)
+    name_map = {"1,": 'LOO'}
+    for fold in fold_list:
+        file_name = prefix + "_fold_" + str(fold) + ".pkl"
+        file_path = os.path.join(cache_dir, file_name)
+        fold_result = load_cache(file_path)
+        result[str(fold)] = fold_result["1,"]
+        name_map[str(fold)] = str(fold) + "-Fold"
+    draw(result, pos, lambda x: name_map[x])
+    print_result(result)
+
+def get_operator_num(p):
+    num = 0
+    for ch in p:
+        if ch == '(': num += 1
+    return num
+
+
+def compare_with_cvc4(benchmark_pos="main", max_result="main.pkl"):
+    cache_file_1 = os.path.join(cache_dir, max_result)
+    result_1 = load_cache(cache_file_1)
+    cache_file_2 = os.path.join(cache_dir, "cvc4.pkl")
+    result_2 = load_cache(cache_file_2)
+    cvc4_program = load_cache(os.path.join(cache_dir, "cvc4_prog.pkl"))
+    main_size = []
+    cvc4_size = []
+    for name, res in result_1["1,"].items():
+        if res is None: continue
+        if cvc4_program[name] is None: continue
+        main_size.append(get_operator_num(res["Program"]))
+        cvc4_size.append(get_operator_num(cvc4_program[name]) -3)
+        num_1 = get_operator_num(res["Program"])
+        num_2 = get_operator_num(cvc4_program[name]) -3
+    assert result_1 is not None
+    if result_2 is None:
+        benchmark_list = collect_benchmarks(benchmark_pos)
+        result = {"cvc4": {}}
+        result_program = {}
+        result_2 = result["cvc4"]
+        for benchmark in to_list(benchmark_list):
+            name = benchmark["name"]
+            ti, prog = run_cvc4(benchmark["path"])
+            result_2[name] = ti
+            result_program[name] = prog
+        save_cache(cache_file_2, result)
+        save_cache(os.path.join(cache_dir, "cvc4_prog.pkl"), result_program)
+    else:
+        result = result_2
+
+    all_benchmark = collect_benchmarks(benchmark_pos)
+    benchmark_list = []
+    for li in all_benchmark:
+        for benchmark in li:
+            benchmark_list.append(benchmark['name'])
+    result["1,"] = result_1["1,"]
+    for solver in result:
+        new_result = {}
+        for fi, res in result[solver].items():
+            if fi in benchmark_list:
+                new_result[fi] = res
+        result[solver] = new_result
+    print_result(result)
+    #draw(result, "cvc4", lambda x: r'$MaxFlash$' if "1" in x else r'$cvc4$',
+    #     size=(4.2,3), is_left=True)
+    return result
+
+def get_invalid_list_for_blaze():
+    file = os.path.join(benchmark_root, "blaze/invalid_list_for_blaze")
+    with open(file, "r") as inp:
+        invalid_list = list(map(lambda x: x[:-1], inp.readlines()))
+    return invalid_list
+
+def get_result_for_blaze(sl_name):
+    name = ".".join(sl_name.split(".")[:-1])
+    log_file = os.path.join("blaze_result/log1", name)
+    if not os.path.exists(log_file):
+        return None
+    with open(log_file, "r") as inp:
+        logs = inp.readlines()
+        if len(logs) <= 2:
+            return None
+        status = logs[0][:-1]
+        if status == "false":
+            return None
+        time_line = logs[3][:-1]
+        ti = time_line.split(" ")[-1]
+        return float(ti) / 1000.
+
+def compare_with_blaze(is_with_model):
+    cache_file = os.path.join(cache_dir, "blaze.pkl" if is_with_model else "blaze_empty.pkl")
+    main_name = "1,blaze"
+    result = load_cache(cache_file)
+    if result is None:
+        benchmark_list = collect_benchmarks("atlas/sygus_with_program" if is_with_model else "atlas/sygus_style")
+        result = run_fold(len(benchmark_list), benchmark_list, default_depth, default_depth, ["blaze"])
+        save_cache(cache_file, result)
+    result["blaze"] = {}
+    for name, value in result[main_name].items():
+        result["blaze"][name] = get_result_for_blaze(name)
+        if result[main_name][name] is None and result["blaze"][name] is not None:
+            print(name)
+    print_result(result)
+    draw(result, "blaze", lambda x: r'$MaxFlash$' if "1" in x else r'$blaze$',
+         size=(4,3), is_left=False, main_name=main_name)
+    return result
+
+def check_valid_for_blaze(sl_name):
+    with open("../benchmark/main/" + sl_name, "r") as inp:
+        lines = inp.readlines()
+        for line in lines:
+            if "synth-fun" in line:
+                if "Int" in line or "Bool" in line:
+                    return False
+    return True
+
+atlas_result = None
+def get_result_for_atlas(sl_name):
+    global atlas_result
+    if atlas_result is None:
+        atlas_result = {}
+        tot = 0
+        with open("atlas_string.csv", "r") as inp:
+            for line in inp.readlines():
+                name, data = line.split(",")
+                if "T" in data:
+                    atlas_result[name] = None
+                else:
+                    while data[-1] in ['\n', ' ']:
+                        data = data[:-1]
+                    data = float(data)
+                    atlas_result[name] = data
+                    tot += 1
+    return atlas_result[sl_name]
+
+atlas_matrix = None
+def get_atlas_matrix_result(target_name):
+    global atlas_matrix
+    if atlas_matrix is None:
+        atlas_matrix = {}
+        tot = 0
+        with open("atlas_matrix.csv", "r") as inp:
+            for line in inp.readlines()[1:]:
+                if "," not in line: continue
+                info = line.split(",")
+                name = info[0]
+                if "T" in line:
+                    ti = None
+                else:
+                    ti = float(info[2])
+                atlas_matrix[name] = ti
+                tot += 1
+    return atlas_matrix[target_name]
+
+flashmeta_result = None
+def get_flashmeta_result(target_name):
+    global flashmeta_result
+    if flashmeta_result is None:
+        flashmeta_result = {}
+        tot = 0
+        with open("flashmeta_matrix.csv", "r") as inp:
+            for line in inp.readlines()[1:]:
+                if "," not in line: continue
+                info = line.split(",")
+                name = info[0]
+                if "T" in line:
+                    ti = None
+                else:
+                    ti = float(info[1])
+                    if ti > 300:
+                        ti = None
+
+                atlas_matrix[name] = ti
+                tot += 1
+    return atlas_matrix[target_name]
+
+
+def compare_with_baselines():
+    cache_file = os.path.join(cache_dir, "matrix_main.pkl")
+    result = load_cache(cache_file)
+    result["atlas"] = {}
+    for name, value in result["1,"].items():
+        result["atlas"][name] = get_atlas_matrix_result(name)
+    result["flashmeta"] = {}
+    for name, value in result["1,"].items():
+        result["flashmeta"][name] = get_flashmeta_result(name)
+    print_result(result)
+    draw(result, "Fig4b", lambda x: r'$MaxFlash$' if "1" in x else r'$Atlas$' if "atlas" in x else r'$FlashMeta$',
+         size=(4.2,3), is_left=True, main_name="1,")
+
+def init_main():
+    cache_file = os.path.join(cache_dir, "optimization.pkl")
+    opt_result = load_cache(cache_file)
+    result = {"1,": opt_result["1,"]}
+    cache_file = os.path.join(cache_dir, "main.pkl")
+    save_cache(cache_file, result)
+
+
+def compare_with_atlas(is_with_model):
+    cache_file = os.path.join(cache_dir, "blaze.pkl" if is_with_model else "blaze_empty.pkl")
+    main_name = "1,blaze"
+    result = load_cache(cache_file)
+    if result is None:
+        benchmark_list = collect_benchmarks("blaze/sygus_with_program" if is_with_model else "blaze/sygus_style")
+        result = run_fold(len(benchmark_list), benchmark_list, default_depth, default_depth, ["blaze"])
+        save_cache(cache_file, result)
+    result["atlas"] = {}
+    for name, value in result[main_name].items():
+        result["atlas"][name] = get_result_for_atlas(name)
+        if not check_valid_for_blaze(name):
+            result["atlas"][name] = None
+            result[main_name][name] = None
+    print_result(result)
+    draw(result, "Fig4a-right", lambda x: r'$MaxFlash$' if "1" in x else r'$Atlas$' if "atlas" in x else r'$FlashMeta$',
+         size=(4,3), is_left=False, main_name=main_name)
+    return result
+
+
+if __name__ == "__main__":
+    isMatrix = False
+
+    clear_dict("result_fig")
+    if not os.path.exists(cache_dir):
+        os.system("mkdir " + cache_dir)
+    flashfill_result = compare_with_flashfill()
+    eusolver_result = compare_with_eusolver()
+    euphony_result = compare_with_euphony()
+    cvc4_result = compare_with_cvc4()
+    draw_exp1_first([eusolver_result, flashfill_result, cvc4_result])
+    compare_with_atlas(True)
+    compare_between_different_depth(pos="Fig4c")
+    compare_with_different_fold([2, 3, 5])
+    draw_different_fold([2, 5], pos="Fig4e")
+    compare_between_different_optimiazation_module(pos="Fig4g")
+
+    isMatrix = True
+    bin_file = "../cmake-build-debug-remote-host/test_matrix"
+    run_matrix("matrix", "matrix_main.pkl")
+    compare_with_baselines()
+    compare_with_different_fold([2, 3, 5], "matrix", "matrix_main")
+    compare_between_different_depth("matrix", "matrix_", pos="Fig4d")
+    draw_different_fold([2, 5], "matrix_main", pos="Fid4f")
+    compare_between_different_optimiazation_module("matrix", "matrix_", pos="Fig4h")
+

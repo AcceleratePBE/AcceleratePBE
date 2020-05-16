@@ -1,0 +1,7 @@
+(set-logic SLIA)
+(constraint (= (f "01/15/2013") "01/2013"))
+(constraint (= (f "03/07/2011") "03/2011"))
+(constraint (= (f "05/09/2009") "05/2009"))
+(check-synth)
+(synth-fun f ((_arg_0 String)) String ((Start String (ntString)) (ntString String ((Str A) (str.++ ntString A))) (A String ((Str ConstString) (SubStr X P P))) (P Int ((Int ntInt) (Pos X Pattern ntInt Direction))) (Pattern String ((Str ConstString) "ProperCase" "CAPS" "lowercase" "Digits" "Alphabets" "Alphanumeric" "WhiteSpace" "ProperCaseWSpaces" "CAPSWSpaces" "lowercaseSpaces" "AlphabetsWSpaces")) (X String (_arg_0)) (ConstString String (_arg_0 "" " " "/")) (Direction Int (0 1)) (ntInt Int (-5 -4 -3 -2 -1 0 1 2 3 4 5))))
+(define-fun ResFun ((_arg_0 String)) String (str.++ (Str (SubStr _arg_0 (Int 0) (Int 1))) (SubStr _arg_0 (Int 5) (Pos _arg_0 "Alphanumeric" 2 1))))

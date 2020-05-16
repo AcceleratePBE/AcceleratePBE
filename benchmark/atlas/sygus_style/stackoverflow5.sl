@@ -1,0 +1,5 @@
+(set-logic SLIA)
+(constraint (= (f "valentine day=1915=50==7.1=45") "valentine day"))
+(constraint (= (f "movie blah=2blahblah, The=1914=54==7.9=17") "movie blah=2blahblah, The"))
+(check-synth)
+(synth-fun f ((_arg_0 String)) String ((Start String (ntString)) (ntString String ((Str A) (str.++ ntString A))) (A String ((Str ConstString) (SubStr X P P))) (P Int ((Int ntInt) (Pos X Pattern ntInt Direction))) (Pattern String ((Str ConstString) "ProperCase" "CAPS" "lowercase" "Digits" "Alphabets" "Alphanumeric" "WhiteSpace" "ProperCaseWSpaces" "CAPSWSpaces" "lowercaseSpaces" "AlphabetsWSpaces")) (X String (_arg_0)) (ConstString String (_arg_0 "" " " "0" "1" "4" "5" "9")) (Direction Int (0 1)) (ntInt Int (-5 -4 -3 -2 -1 0 1 2 3 4 5))))

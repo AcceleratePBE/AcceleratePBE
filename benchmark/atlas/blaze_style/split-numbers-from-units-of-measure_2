@@ -1,0 +1,12 @@
+// examples 
+"80v|3"
+"v"
+"10hrs|3"
+"hrs"
+"7h|2"
+"h"
+"500m|4"
+"m"
+
+// extra constants 
+s:""#10|" "#10

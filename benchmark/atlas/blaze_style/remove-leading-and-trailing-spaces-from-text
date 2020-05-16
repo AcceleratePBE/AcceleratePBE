@@ -1,0 +1,10 @@
+// examples 
+"  The shawshank"
+"The shawshank"
+"The    godfather"
+"The godfather"
+"    pulp   fiction"
+"pulp fiction"
+
+// extra constants 
+s:""#10|" "#10

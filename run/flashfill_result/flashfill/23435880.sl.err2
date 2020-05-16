@@ -1,0 +1,8 @@
+Convert-String : Convert-String 在使用你提供的示例解析数据时似乎出现了问题。我们很乐意帮你找出问题的原因 - 你可以将尝试过的命令以邮件形式发送到 psdmfb@microsoft.com。我们将审阅所有提
+交内容，不过我们不保证给予答复。
+所在位置 D:\Documents\Tencent Files\564175296\FileRecv\run_flashfill\run.ps1:637 字符: 31
++ ...  $problem | Convert-String -Example $constraint  > $OUTPUT\23435880.s ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidResult: (:) [Convert-String]，ArgumentException
+    + FullyQualifiedErrorId : NoProgramFound,Microsoft.PowerShell.Commands.StringManipulation.ConvertStringCommand
+ 

@@ -1,0 +1,8 @@
+// examples 
+"india china japan"
+"india china"
+"indonesia korea"
+"indonesia"
+
+// extra constants 
+s:""#10|" "#10|"in"#10

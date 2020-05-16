@@ -1,0 +1,12 @@
+// examples 
+"C0abc|def"
+"C0abc"
+"aabc|def"
+"def"
+"C0dd|qwe"
+"C0dd"
+"dd|qwe"
+"qwe"
+
+// extra constants 
+s:""#10|" "#10|"C0"#10

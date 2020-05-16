@@ -1,0 +1,10 @@
+// examples 
+"The fox jumped over the fox|fox"
+"2"
+"The fox jumped over the fox|ox"
+"2"
+"The fox jumped over the fox|Fox"
+"0"
+
+// extra constants 
+s:""#10|" "#10

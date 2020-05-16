@@ -1,0 +1,12 @@
+// examples 
+"apple|apple"
+"true"
+"orange|Orange"
+"false"
+"peach|peach"
+"true"
+"cherry|cherrY"
+"false"
+
+// extra constants 
+s:""#10|" "#10

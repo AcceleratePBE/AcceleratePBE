@@ -1,0 +1,12 @@
+// examples 
+"one, 1"
+"one apple"
+"two, 2"
+"two bananas"
+"three, 3"
+"three strawberries"
+"four, 4"
+"four oranges"
+
+// extra constants 
+s:""#10|" "#10|"1"#10|"2"#10|"3"#10|"4"#10|"apple"#10|"bananas"#10|"strawberries"#10|"oranges"#10|","#10

@@ -1,0 +1,12 @@
+// examples 
+"apples30|7"
+"apples"
+"peaches24|8"
+"peaches"
+"peaches0|8"
+"peaches"
+"pears|6"
+"pears"
+
+// extra constants 
+s:""#10|" "#10

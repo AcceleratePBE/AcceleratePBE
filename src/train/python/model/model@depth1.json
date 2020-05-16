@@ -1,0 +1,174 @@
+[
+    {
+        "context": [
+            "None"
+        ],
+        "rule": [
+            {
+                "term": "Str",
+                "p": 0.5142857142857142
+            },
+            {
+                "term": "str.++",
+                "p": 0.4857142857142857
+            }
+        ]
+    },
+    {
+        "context": [
+            "Str@1"
+        ],
+        "rule": [
+            {
+                "term": "SubStr",
+                "p": 0.3125
+            },
+            {
+                "term": "Constant@SomeOutput",
+                "p": 0.2916666666666667
+            },
+            {
+                "term": "Str",
+                "p": 0.10416666666666667
+            },
+            {
+                "term": "Constant@SomeInOutput",
+                "p": 0.14583333333333334
+            },
+            {
+                "term": "Param@String",
+                "p": 0.14583333333333334
+            }
+        ]
+    },
+    {
+        "context": [
+            "SubStr@1"
+        ],
+        "rule": [
+            {
+                "term": "Param@String",
+                "p": 1.0
+            }
+        ]
+    },
+    {
+        "context": [
+            "SubStr@2"
+        ],
+        "rule": [
+            {
+                "term": "Int",
+                "p": 0.5574712643678161
+            },
+            {
+                "term": "Pos",
+                "p": 0.4425287356321839
+            }
+        ]
+    },
+    {
+        "context": [
+            "Int@1"
+        ],
+        "rule": [
+            {
+                "term": "Constant@Int",
+                "p": 0.9924812030075187
+            },
+            {
+                "term": "Param@Int",
+                "p": 0.007518796992481203
+            }
+        ]
+    },
+    {
+        "context": [
+            "SubStr@3"
+        ],
+        "rule": [
+            {
+                "term": "Int",
+                "p": 0.20689655172413793
+            },
+            {
+                "term": "Pos",
+                "p": 0.7931034482758621
+            }
+        ]
+    },
+    {
+        "context": [
+            "Pos@1"
+        ],
+        "rule": [
+            {
+                "term": "Param@String",
+                "p": 1.0
+            }
+        ]
+    },
+    {
+        "context": [
+            "Pos@2"
+        ],
+        "rule": [
+            {
+                "term": "Constant@None",
+                "p": 1.0
+            }
+        ]
+    },
+    {
+        "context": [
+            "Pos@3"
+        ],
+        "rule": [
+            {
+                "term": "Constant@Int",
+                "p": 1.0
+            }
+        ]
+    },
+    {
+        "context": [
+            "Pos@4"
+        ],
+        "rule": [
+            {
+                "term": "Constant@Int",
+                "p": 1.0
+            }
+        ]
+    },
+    {
+        "context": [
+            "str.++@1"
+        ],
+        "rule": [
+            {
+                "term": "Str",
+                "p": 0.2956521739130435
+            },
+            {
+                "term": "str.++",
+                "p": 0.7043478260869566
+            }
+        ]
+    },
+    {
+        "context": [
+            "str.++@2"
+        ],
+        "rule": [
+            {
+                "term": "Str",
+                "p": 0.7
+            },
+            {
+                "term": "SubStr",
+                "p": 0.3
+            }
+        ]
+    }
+]

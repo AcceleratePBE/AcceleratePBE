@@ -1,0 +1,8 @@
+(set-logic SLIA)
+(constraint (= (f "red ball, green sweater" "red" "green" "pink") true))
+(constraint (= (f "pink ball, green sweater" "red" "green" "pink") false))
+(constraint (= (f "blue sea, pink ribbon" "red" "blue" "pink") false))
+(constraint (= (f "black sea, white ribbon" "red" "blue" "pink") false))
+(constraint (= (f "red green blue" "red" "blue" "pink") true))
+(check-synth)
+(synth-fun f ((_arg_0 String) (_arg_1 String) (_arg_2 String) (_arg_3 String)) Bool ((Start Bool (ntBool)) (ntString String ((Str A) (str.++ ntString A))) (A String ((Str ConstString) (SubStr X P P))) (P Int ((Int ntInt) (Pos X Pattern ntInt Direction))) (Pattern String ((Str ConstString) "ProperCase" "CAPS" "lowercase" "Digits" "Alphabets" "Alphanumeric" "WhiteSpace" "ProperCaseWSpaces" "CAPSWSpaces" "lowercaseSpaces" "AlphabetsWSpaces")) (X String (_arg_0 _arg_1 _arg_2 _arg_3)) (ConstString String (_arg_0 _arg_1 _arg_2 _arg_3 "" " ")) (Direction Int (0 1)) (ntInt Int (-5 -4 -3 -2 -1 0 1 2 3 4 5))))

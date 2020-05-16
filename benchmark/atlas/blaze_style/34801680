@@ -1,0 +1,8 @@
+// examples 
+"Name= ABC Retailers"
+"ABC Retailers"
+" ame= XYZ Suppliers"
+"XYZ Suppliers"
+
+// extra constants 
+s:""#10|" "#10|"Name"#10|"="#10

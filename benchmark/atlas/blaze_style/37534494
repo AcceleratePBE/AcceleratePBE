@@ -1,0 +1,8 @@
+// examples 
+"I love apples|I hate bananas|banana"
+"I hate bananas"
+"I love apples|I hate bananas|apple"
+"I love apples"
+
+// extra constants 
+s:""#10|" "#10

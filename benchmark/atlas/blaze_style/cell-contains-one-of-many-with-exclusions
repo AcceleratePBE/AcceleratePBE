@@ -1,0 +1,14 @@
+// examples 
+"yellow dog on green grass|yellow|green|cat"
+"true"
+"warm gray sweater|yellow|green|cat"
+"false"
+"blue neon signs|blue|green|neon"
+"false"
+"hot pink socks|blue|pink|neon"
+"true"
+"deep black eyes|yellow|green|neon"
+"false"
+
+// extra constants 
+s:""#10|" "#10

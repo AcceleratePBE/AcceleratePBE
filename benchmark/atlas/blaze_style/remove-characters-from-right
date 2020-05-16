@@ -1,0 +1,12 @@
+// examples 
+"736 miles"
+"736"
+"1255 miles"
+"1255"
+"1221 miles"
+"1221"
+"790 miles"
+"790"
+
+// extra constants 
+s:""#10|" "#10

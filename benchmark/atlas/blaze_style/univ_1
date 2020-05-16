@@ -1,0 +1,16 @@
+// examples 
+"University of Pennsylvania|Phialdelphia, PA, USA"
+"University of Pennsylvania, Phialdelphia, PA, USA"
+"Cornell University|Ithaca, New York, USA"
+"Cornell University, Ithaca, New York, USA"
+"University of Maryland College Park|College Park, MD"
+"University of Maryland College Park, College Park, MD"
+"University of Michigan|Ann Arbor, MI, USA"
+"University of Michigan, Ann Arbor, MI, USA"
+"Yale University|New Haven, CT, USA"
+"Yale University, New Haven, CT, USA"
+"Columbia University|New York, NY, USA"
+"Columbia University, New York, NY, USA"
+
+// extra constants 
+s:" "#10|","#10

@@ -1,0 +1,8 @@
+// examples 
+"valentine day=1915=50==7.1=45"
+"valentine day"
+"movie blah=2blahblah, The=1914=54==7.9=17"
+"movie blah=2blahblah, The"
+
+// extra constants 
+s:""#10|" "#10|"0"#10|"1"#10|"4"#10|"5"#10|"9"#10

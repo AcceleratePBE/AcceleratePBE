@@ -1,0 +1,10 @@
+// examples 
+"brown|traci"
+"tbrown_acme.com"
+"thomas|linda"
+"lthomas_acme.com"
+"ward|jack"
+"jward_acme.com"
+
+// extra constants 
+s:""#10|" "#10|"_acme.com"#10

@@ -1,0 +1,556 @@
+{
+    "spec": {
+        "param": [
+            {
+                "name": "k1",
+                "type": "Bool"
+            },
+            {
+                "name": "k2",
+                "type": "Bool"
+            },
+            {
+                "name": "k3",
+                "type": "Bool"
+            },
+            {
+                "name": "r1",
+                "type": "Bool"
+            },
+            {
+                "name": "r2",
+                "type": "Bool"
+            },
+            {
+                "name": "r3",
+                "type": "Bool"
+            },
+            {
+                "name": "r4",
+                "type": "Bool"
+            }
+        ],
+        "return_type": "Bool",
+        "non_terminal": [
+            {
+                "name": "Start",
+                "type": "Bool",
+                "rule": [
+                    {
+                        "type": "expr",
+                        "operator": "and",
+                        "param": [
+                            "d1",
+                            "d1"
+                        ]
+                    },
+                    {
+                        "type": "expr",
+                        "operator": "or",
+                        "param": [
+                            "d1",
+                            "d1"
+                        ]
+                    },
+                    {
+                        "type": "expr",
+                        "operator": "xor",
+                        "param": [
+                            "d1",
+                            "d1"
+                        ]
+                    },
+                    {
+                        "type": "expr",
+                        "operator": "not",
+                        "param": [
+                            "d1"
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "d1",
+                "type": "Bool",
+                "rule": [
+                    {
+                        "type": "expr",
+                        "operator": "and",
+                        "param": [
+                            "d2",
+                            "d2"
+                        ]
+                    },
+                    {
+                        "type": "expr",
+                        "operator": "or",
+                        "param": [
+                            "d2",
+                            "d2"
+                        ]
+                    },
+                    {
+                        "type": "expr",
+                        "operator": "xor",
+                        "param": [
+                            "d2",
+                            "d2"
+                        ]
+                    },
+                    {
+                        "type": "expr",
+                        "operator": "not",
+                        "param": [
+                            "d2"
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "d2",
+                "type": "Bool",
+                "rule": [
+                    {
+                        "type": "expr",
+                        "operator": "and",
+                        "param": [
+                            "d3",
+                            "d3"
+                        ]
+                    },
+                    {
+                        "type": "expr",
+                        "operator": "or",
+                        "param": [
+                            "d3",
+                            "d3"
+                        ]
+                    },
+                    {
+                        "type": "expr",
+                        "operator": "xor",
+                        "param": [
+                            "d3",
+                            "d3"
+                        ]
+                    },
+                    {
+                        "type": "expr",
+                        "operator": "not",
+                        "param": [
+                            "d3"
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "d3",
+                "type": "Bool",
+                "rule": [
+                    {
+                        "type": "expr",
+                        "operator": "and",
+                        "param": [
+                            "d4",
+                            "d4"
+                        ]
+                    },
+                    {
+                        "type": "expr",
+                        "operator": "or",
+                        "param": [
+                            "d4",
+                            "d4"
+                        ]
+                    },
+                    {
+                        "type": "expr",
+                        "operator": "xor",
+                        "param": [
+                            "d4",
+                            "d4"
+                        ]
+                    },
+                    {
+                        "type": "expr",
+                        "operator": "not",
+                        "param": [
+                            "d4"
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "d4",
+                "type": "Bool",
+                "rule": [
+                    {
+                        "type": "expr",
+                        "operator": "and",
+                        "param": [
+                            "d5",
+                            "d5"
+                        ]
+                    },
+                    {
+                        "type": "expr",
+                        "operator": "or",
+                        "param": [
+                            "d5",
+                            "d5"
+                        ]
+                    },
+                    {
+                        "type": "expr",
+                        "operator": "xor",
+                        "param": [
+                            "d5",
+                            "d5"
+                        ]
+                    },
+                    {
+                        "type": "expr",
+                        "operator": "not",
+                        "param": [
+                            "d5"
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "d5",
+                "type": "Bool",
+                "rule": [
+                    {
+                        "type": "var",
+                        "var_name": "k1",
+                        "var_type": "Bool"
+                    },
+                    {
+                        "type": "var",
+                        "var_name": "k2",
+                        "var_type": "Bool"
+                    },
+                    {
+                        "type": "var",
+                        "var_name": "k3",
+                        "var_type": "Bool"
+                    },
+                    {
+                        "type": "var",
+                        "var_name": "r1",
+                        "var_type": "Bool"
+                    },
+                    {
+                        "type": "var",
+                        "var_name": "r2",
+                        "var_type": "Bool"
+                    },
+                    {
+                        "type": "var",
+                        "var_name": "r3",
+                        "var_type": "Bool"
+                    },
+                    {
+                        "type": "var",
+                        "var_name": "r4",
+                        "var_type": "Bool"
+                    }
+                ]
+            }
+        ]
+    },
+    "global_var": [
+        {
+            "name": "k1",
+            "type": "Bool"
+        },
+        {
+            "name": "k2",
+            "type": "Bool"
+        },
+        {
+            "name": "k3",
+            "type": "Bool"
+        },
+        {
+            "name": "r1",
+            "type": "Bool"
+        },
+        {
+            "name": "r2",
+            "type": "Bool"
+        },
+        {
+            "name": "r3",
+            "type": "Bool"
+        },
+        {
+            "name": "r4",
+            "type": "Bool"
+        },
+        {
+            "name": "temp0",
+            "type": "Bool"
+        }
+    ],
+    "constraint": [
+        {
+            "type": "expr",
+            "operator": "=",
+            "params": [
+                {
+                    "type": "var",
+                    "var_name": "temp0",
+                    "var_type": "Bool"
+                },
+                {
+                    "type": "function",
+                    "params": [
+                        {
+                            "type": "var",
+                            "var_name": "k1",
+                            "var_type": "Bool"
+                        },
+                        {
+                            "type": "var",
+                            "var_name": "k2",
+                            "var_type": "Bool"
+                        },
+                        {
+                            "type": "var",
+                            "var_name": "k3",
+                            "var_type": "Bool"
+                        },
+                        {
+                            "type": "var",
+                            "var_name": "r1",
+                            "var_type": "Bool"
+                        },
+                        {
+                            "type": "var",
+                            "var_name": "r2",
+                            "var_type": "Bool"
+                        },
+                        {
+                            "type": "var",
+                            "var_name": "r3",
+                            "var_type": "Bool"
+                        },
+                        {
+                            "type": "var",
+                            "var_name": "r4",
+                            "var_type": "Bool"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "extra": [
+        {
+            "type": "expr",
+            "operator": "=",
+            "params": [
+                {
+                    "type": "var",
+                    "var_name": "temp0",
+                    "var_type": "Bool"
+                },
+                {
+                    "type": "expr",
+                    "operator": "xor",
+                    "params": [
+                        {
+                            "type": "expr",
+                            "operator": "xor",
+                            "params": [
+                                {
+                                    "type": "var",
+                                    "var_name": "r1",
+                                    "var_type": "Bool"
+                                },
+                                {
+                                    "type": "const",
+                                    "value": "false",
+                                    "value_type": "Bool"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "expr",
+                            "operator": "xor",
+                            "params": [
+                                {
+                                    "type": "expr",
+                                    "operator": "xor",
+                                    "params": [
+                                        {
+                                            "type": "var",
+                                            "var_name": "k1",
+                                            "var_type": "Bool"
+                                        },
+                                        {
+                                            "type": "var",
+                                            "var_name": "r1",
+                                            "var_type": "Bool"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "expr",
+                                    "operator": "xor",
+                                    "params": [
+                                        {
+                                            "type": "expr",
+                                            "operator": "xor",
+                                            "params": [
+                                                {
+                                                    "type": "expr",
+                                                    "operator": "xor",
+                                                    "params": [
+                                                        {
+                                                            "type": "var",
+                                                            "var_name": "r3",
+                                                            "var_type": "Bool"
+                                                        },
+                                                        {
+                                                            "type": "expr",
+                                                            "operator": "not",
+                                                            "params": [
+                                                                {
+                                                                    "type": "var",
+                                                                    "var_name": "r2",
+                                                                    "var_type": "Bool"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "type": "expr",
+                                                    "operator": "and",
+                                                    "params": [
+                                                        {
+                                                            "type": "expr",
+                                                            "operator": "not",
+                                                            "params": [
+                                                                {
+                                                                    "type": "expr",
+                                                                    "operator": "xor",
+                                                                    "params": [
+                                                                        {
+                                                                            "type": "var",
+                                                                            "var_name": "k2",
+                                                                            "var_type": "Bool"
+                                                                        },
+                                                                        {
+                                                                            "type": "var",
+                                                                            "var_name": "r2",
+                                                                            "var_type": "Bool"
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "type": "expr",
+                                                            "operator": "xor",
+                                                            "params": [
+                                                                {
+                                                                    "type": "var",
+                                                                    "var_name": "k3",
+                                                                    "var_type": "Bool"
+                                                                },
+                                                                {
+                                                                    "type": "var",
+                                                                    "var_name": "r3",
+                                                                    "var_type": "Bool"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "expr",
+                                            "operator": "xor",
+                                            "params": [
+                                                {
+                                                    "type": "var",
+                                                    "var_name": "r4",
+                                                    "var_type": "Bool"
+                                                },
+                                                {
+                                                    "type": "expr",
+                                                    "operator": "xor",
+                                                    "params": [
+                                                        {
+                                                            "type": "expr",
+                                                            "operator": "and",
+                                                            "params": [
+                                                                {
+                                                                    "type": "var",
+                                                                    "var_name": "r2",
+                                                                    "var_type": "Bool"
+                                                                },
+                                                                {
+                                                                    "type": "expr",
+                                                                    "operator": "xor",
+                                                                    "params": [
+                                                                        {
+                                                                            "type": "var",
+                                                                            "var_name": "k3",
+                                                                            "var_type": "Bool"
+                                                                        },
+                                                                        {
+                                                                            "type": "var",
+                                                                            "var_name": "r3",
+                                                                            "var_type": "Bool"
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "type": "expr",
+                                                            "operator": "and",
+                                                            "params": [
+                                                                {
+                                                                    "type": "var",
+                                                                    "var_name": "r3",
+                                                                    "var_type": "Bool"
+                                                                },
+                                                                {
+                                                                    "type": "expr",
+                                                                    "operator": "xor",
+                                                                    "params": [
+                                                                        {
+                                                                            "type": "var",
+                                                                            "var_name": "k2",
+                                                                            "var_type": "Bool"
+                                                                        },
+                                                                        {
+                                                                            "type": "var",
+                                                                            "var_name": "r2",
+                                                                            "var_type": "Bool"
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

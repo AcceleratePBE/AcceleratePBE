@@ -1,0 +1,12 @@
+// examples 
+"yellow dog on green grass|yellow|green|dog"
+"true"
+"Lone dog with a green frisbie on yellow sand|yellow|green|dog"
+"true"
+"A yellow sun in a green field|yellow|green|dog"
+"false"
+"yellow neon sign with a green background|yellow|green|dog"
+"false"
+
+// extra constants 
+s:""#10|" "#10

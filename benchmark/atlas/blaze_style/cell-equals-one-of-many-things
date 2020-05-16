@@ -1,0 +1,18 @@
+// examples 
+"yellow"
+"true"
+"gray"
+"false"
+"black"
+"false"
+"blue"
+"true"
+"pink"
+"true"
+"orange"
+"true"
+"turkey"
+"false"
+
+// extra constants 
+s:""#10|" "#10|"yellow"#10|"orange"#10|"green"#10|"blue"#10|"pink"#10

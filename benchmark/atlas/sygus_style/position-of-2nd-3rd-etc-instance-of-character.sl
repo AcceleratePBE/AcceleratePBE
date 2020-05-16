@@ -1,0 +1,5 @@
+(set-logic SLIA)
+(constraint (= (f "100x15x50" "x" 2) 7))
+(constraint (= (f "cat-in-the-hat" "-" 3) 11))
+(check-synth)
+(synth-fun f ((_arg_0 String) (_arg_1 String) (_arg_2 Int)) Int ((Start Int (ntInt)) (ntString String ((Str A) (str.++ ntString A))) (A String ((Str ConstString) (SubStr X P P))) (P Int ((Int ntInt) (Pos X Pattern ntInt Direction))) (Pattern String ((Str ConstString) "ProperCase" "CAPS" "lowercase" "Digits" "Alphabets" "Alphanumeric" "WhiteSpace" "ProperCaseWSpaces" "CAPSWSpaces" "lowercaseSpaces" "AlphabetsWSpaces")) (X String (_arg_0 _arg_1)) (ConstString String (_arg_0 _arg_1 "" " ")) (Direction Int (0 1)) (ntInt Int (-5 -4 -3 -2 -1 0 1 2 3 4 5 _arg_2))))

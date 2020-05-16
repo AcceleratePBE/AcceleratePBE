@@ -1,0 +1,8 @@
+// examples 
+"apple apples|apple"
+"2"
+"an orange among the oranges is a spoiled orange|orange"
+"3"
+
+// extra constants 
+s:""#10|" "#10
